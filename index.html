@@ -1,0 +1,229 @@
+<script>
+
+// ===============================
+// CARRINHO
+// ===============================
+let cart = [];
+
+// ===============================
+// SISTEMA DE PRODUTOS (ESTOQUE)
+// ===============================
+let produtos = [
+  { codigo: 1, nome: "Cuca Tradicional", estoque: 50, valor: 35 },
+  { codigo: 2, nome: "Pão Francês", estoque: 50, valor: 15 },
+  { codigo: 3, nome: "Geleia de Morango", estoque: 50, valor: 45 }
+];
+
+// ===============================
+// HISTÓRICO DE VENDAS
+// ===============================
+let salesHistory = JSON.parse(localStorage.getItem('doce_forno_sales') || '[]');
+
+if (salesHistory.length === 0) {
+  salesHistory = [];
+  saveSales();
+}
+
+// ===============================
+// BUSCAR PRODUTO
+// ===============================
+function buscarProduto(nome) {
+  return produtos.find(p => p.nome.toLowerCase() === nome.toLowerCase());
+}
+
+// ===============================
+// TROCA DE ABAS
+// ===============================
+function switchTab(tab) {
+  document.getElementById('tab-loja').classList.toggle('hidden', tab !== 'loja');
+  document.getElementById('tab-relatorio').classList.toggle('hidden', tab !== 'relatorio');
+
+  if (tab === 'relatorio') renderReports();
+}
+
+// ===============================
+// CARRINHO
+// ===============================
+function toggleCart() {
+  document.getElementById('cart-modal').classList.toggle('hidden');
+}
+
+// ===============================
+// ADICIONAR AO CARRINHO (COM ESTOQUE)
+// ===============================
+function addToCart(id, name, price) {
+  let produto = buscarProduto(name);
+
+  if (!produto) {
+    showToast("Produto não encontrado!");
+    return;
+  }
+
+  if (produto.estoque <= 0) {
+    showToast("Sem estoque!");
+    return;
+  }
+
+  const existing = cart.find(item => item.id === id);
+
+  if (existing) {
+    if (existing.qty + 1 > produto.estoque) {
+      showToast("Estoque insuficiente!");
+      return;
+    }
+    existing.qty++;
+  } else {
+    cart.push({ id, name, price, qty: 1 });
+  }
+
+  updateCartUI();
+  showToast(name + " adicionado!");
+}
+
+// ===============================
+// ATUALIZAR QUANTIDADE
+// ===============================
+function updateCartQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (item) {
+    let produto = buscarProduto(item.name);
+
+    if (delta > 0 && item.qty + 1 > produto.estoque) {
+      showToast("Estoque insuficiente!");
+      return;
+    }
+
+    item.qty += delta;
+
+    if (item.qty <= 0) {
+      cart = cart.filter(i => i.id !== id);
+    }
+  }
+
+  updateCartUI();
+}
+
+// ===============================
+// UI DO CARRINHO
+// ===============================
+function updateCartUI() {
+  const container = document.getElementById('cart-items-container');
+  const badge = document.getElementById('cart-badge');
+  const totalEl = document.getElementById('cart-total');
+
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+  badge.innerText = totalItems;
+  badge.classList.toggle('hidden', totalItems === 0);
+
+  container.innerHTML = cart.map(item => `
+    <div class="flex justify-between p-3 bg-stone-50 rounded">
+      <span>${item.name} (${item.qty})</span>
+      <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
+    </div>
+  `).join('');
+
+  totalEl.innerText = `R$ ${totalPrice.toFixed(2)}`;
+}
+
+// ===============================
+// FINALIZAR PEDIDO
+// ===============================
+function checkoutWhatsApp() {
+
+  if (cart.length === 0) {
+    showToast("Carrinho vazio!");
+    return;
+  }
+
+  let total = 0;
+  let itens = "";
+
+  cart.forEach(item => {
+
+    let produto = buscarProduto(item.name);
+
+    if (produto.estoque < item.qty) {
+      showToast("Estoque insuficiente!");
+      return;
+    }
+
+    produto.estoque -= item.qty;
+
+    let valor = item.qty * item.price;
+    total += valor;
+
+    itens += `${item.qty}x ${item.name}, `;
+  });
+
+  // salvar venda
+  salesHistory.unshift({
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    client: "Cliente",
+    items: itens,
+    total: total,
+    status: "PIX"
+  });
+
+  saveSales();
+
+  cart = [];
+  updateCartUI();
+  renderReports();
+
+  showToast("Pedido finalizado!");
+}
+
+// ===============================
+// RELATÓRIO
+// ===============================
+function renderReports() {
+
+  let totalFaturamento = 0;
+  let totalPedidos = salesHistory.length;
+
+  salesHistory.forEach(sale => {
+    totalFaturamento += sale.total;
+  });
+
+  document.getElementById('kpi-faturamento').innerText = `R$ ${totalFaturamento.toFixed(2)}`;
+  document.getElementById('kpi-pedidos').innerText = totalPedidos;
+  document.getElementById('kpi-ticket').innerText =
+    totalPedidos > 0 ? `R$ ${(totalFaturamento / totalPedidos).toFixed(2)}` : "R$ 0,00";
+
+  const tbody = document.getElementById('sales-table-body');
+
+  tbody.innerHTML = salesHistory.map(sale => `
+    <tr>
+      <td>${sale.date}</td>
+      <td>${sale.client}</td>
+      <td>${sale.items}</td>
+      <td>R$ ${sale.total.toFixed(2)}</td>
+      <td>${sale.status}</td>
+    </tr>
+  `).join('');
+}
+
+// ===============================
+// STORAGE
+// ===============================
+function saveSales() {
+  localStorage.setItem('doce_forno_sales', JSON.stringify(salesHistory));
+}
+
+// ===============================
+// TOAST
+// ===============================
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-message').innerText = msg;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+// INIT
+updateCartUI();
+
+</script>
