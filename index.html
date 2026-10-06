@@ -1,229 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doce Forno - Padaria Artesanal</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap%27);
+
+    body { font-family: 'Poppins', sans-serif; background-color: #FDFBF7; }
+
+    .font-serif-title { font-family: 'Playfair Display', serif; }
+</style>
+</head>
+<body class="text-stone-800">
+ 
+  <!-- Header -->
+<header class="bg-amber-900 text-amber-50 sticky top-0 z-40 shadow-md">
+<div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<i class="fa-solid fa-wheat-awn text-2xl text-amber-400"></i>
+<h1 class="font-serif-title text-2xl md:text-3xl font-bold tracking-wide">Doce Forno</h1>
+</div>
+<div class="flex items-center gap-4">
+<button onclick="switchTab('loja')" id="btn-loja" class="px-3 py-1.5 rounded-lg bg-amber-800 text-amber-100 font-medium transition">
+<i class="fa-solid fa-store mr-1.5"></i>Loja
+</button>
+<button onclick="switchTab('relatorio')" id="btn-relatorio" class="px-3 py-1.5 rounded-lg hover:bg-amber-800 text-amber-200 font-medium transition">
+<i class="fa-solid fa-chart-line mr-1.5"></i>Relatório
+</button>
+<button onclick="toggleCart()" class="relative p-2 bg-amber-800 rounded-full hover:bg-amber-700 transition">
+<i class="fa-solid fa-shopping-basket text-xl text-amber-300"></i>
+<span id="cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+</button>
+</div>
+</div>
+</header>
+ 
+  <!-- SEÇÃO LOJA -->
+<main id="tab-loja" class="max-w-6xl mx-auto px-4 py-8">
+<!-- Banner Principal -->
+<div class="bg-amber-100/80 border border-amber-200 rounded-2xl p-6 md:p-10 mb-10 text-center relative overflow-hidden shadow-sm">
+<h2 class="font-serif-title text-3xl md:text-4xl font-bold text-amber-950 mb-2">Tradição e Sabor Artesanal</h2>
+<p class="text-amber-800 text-base md:text-lg max-w-xl mx-auto">Produtos frescos feitos com carinho e ingredientes selecionados diariamente para si.</p>
+</div>
+ 
+    <!-- Lista de Produtos -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<!-- Produto 1: Cuca Tradicional -->
+<div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-md transition flex flex-col">
+<div class="h-48 bg-amber-50 flex items-center justify-center p-4 relative border-b border-stone-100">
+<svg class="w-full h-full max-h-40" viewBox="0 0 300 200" fill="none">
+<rect x="30" y="110" width="240" height="60" rx="8" fill="#D97706" />
+<rect x="25" y="80" width="250" height="40" rx="6" fill="#F59E0B" />
+<path d="M 30 80 Q 45 65 60 80 Q 75 60 90 80 Q 105 65 120 80 Q 135 60 150 80 Q 165 65 180 80 Q 195 60 210 80 Q 225 65 240 80 Q 255 60 270 80 L 270 85 L 30 85 Z" fill="#FCD34D" />
+<circle cx="50" cy="72" r="4" fill="#B45309" />
+<circle cx="85" cy="68" r="5" fill="#B45309" />
+<circle cx="125" cy="70" r="4" fill="#B45309" />
+<circle cx="160" cy="66" r="6" fill="#B45309" />
+<circle cx="200" cy="72" r="4" fill="#B45309" />
+<circle cx="235" cy="68" r="5" fill="#B45309" />
+</svg>
+</div>
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Especialidade</span>
+<h3 class="font-serif-title text-xl font-bold text-stone-900 mt-2">Cuca Tradicional</h3>
+<p class="text-stone-600 text-sm mt-1">Massa fofinha com deliciosa cobertura de farofa crocante artesanal.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
+<span class="text-2xl font-bold text-amber-900">R$ 35,00</span>
+<button onclick="addToCart(1, 'Cuca Tradicional', 35)" class="bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2">
+<i class="fa-solid fa-plus"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+ 
+      <!-- Produto 2: Pão Francês -->
+<div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-md transition flex flex-col">
+<div class="h-48 bg-amber-50 flex items-center justify-center p-4 relative border-b border-stone-100">
+<svg class="w-full h-full max-h-40" viewBox="0 0 300 200" fill="none">
+<path d="M 40 120 L 60 180 L 240 180 L 260 120 Z" fill="#92400E" />
+<path d="M 30 115 L 270 115 L 265 125 L 35 125 Z" fill="#B45309" />
+<ellipse cx="100" cy="110" rx="35" ry="22" fill="#F59E0B" transform="rotate(-15 100 110)" />
+<path d="M 80 105 Q 100 100 120 115" stroke="#78350F" stroke-width="3" stroke-linecap="round" />
+<ellipse cx="150" cy="100" rx="38" ry="24" fill="#FBBF24" />
+<path d="M 130 95 Q 150 90 170 105" stroke="#78350F" stroke-width="3" stroke-linecap="round" />
+<ellipse cx="200" cy="110" rx="35" ry="22" fill="#F59E0B" transform="rotate(15 200 110)" />
+<path d="M 180 115 Q 200 100 220 105" stroke="#78350F" stroke-width="3" stroke-linecap="round" />
+</svg>
+</div>
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-xs font-semibold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase tracking-wider">Fresco Diariamente</span>
+<h3 class="font-serif-title text-xl font-bold text-stone-900 mt-2">Pão Francês</h3>
+<p class="text-stone-600 text-sm mt-1">Cestinha com pães quentinhos, casca crocante e miolo macio.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
+<span class="text-2xl font-bold text-amber-900">R$ 15,00</span>
+<button onclick="addToCart(2, 'Pão Francês', 15)" class="bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2">
+<i class="fa-solid fa-plus"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+ 
+      <!-- Produto 3: Geleia de Morango -->
+<div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden hover:shadow-md transition flex flex-col">
+<div class="h-48 bg-rose-50 flex items-center justify-center p-4 relative border-b border-stone-100">
+<svg class="w-full h-full max-h-40" viewBox="0 0 300 200" fill="none">
+<rect x="105" y="70" width="90" height="100" rx="15" fill="#991B1B" opacity="0.9" />
+<rect x="110" y="75" width="80" height="90" rx="10" fill="#DC2626" />
+<rect x="100" y="55" width="100" height="15" rx="4" fill="#D97706" />
+<rect x="105" y="50" width="90" height="8" rx="2" fill="#F59E0B" />
+<path d="M 120 85 Q 125 120 120 155" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.4" />
+<path d="M 70 150 Q 80 130 90 150 Q 80 170 70 150 Z" fill="#EF4444" />
+<path d="M 75 135 L 85 135 L 80 142 Z" fill="#166534" />
+</svg>
+</div>
+<div class="p-5 flex-1 flex flex-col justify-between">
+<div>
+<span class="text-xs font-semibold text-rose-700 bg-rose-100 px-2.5 py-1 rounded-full uppercase tracking-wider">100% Natural</span>
+<h3 class="font-serif-title text-xl font-bold text-stone-900 mt-2">Geleia de Morango</h3>
+<p class="text-stone-600 text-sm mt-1">Geleia caseira em pote de vidro, feita com morangos selecionados.</p>
+</div>
+<div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between">
+<span class="text-2xl font-bold text-amber-900">R$ 45,00</span>
+<button onclick="addToCart(3, 'Geleia de Morango', 45)" class="bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2">
+<i class="fa-solid fa-plus"></i> Adicionar
+</button>
+</div>
+</div>
+</div>
+ 
+    </div>
+ 
+    <!-- Informações de Pagamento e Contato -->
+<div class="bg-stone-900 text-white rounded-2xl p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-center shadow-lg">
+<div>
+<div class="inline-flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+<i class="fa-brands fa-pix text-xl"></i>
+<span>Pagamento Facilitado via PIX</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">Chave PIX Oficial</h3>
+<p class="text-stone-400 text-sm mb-4">Efetue o pagamento utilizando a chave abaixo:</p>
+<div class="flex items-center bg-stone-800 p-3 rounded-xl border border-stone-700">
+<span id="pix-key" class="font-mono text-lg text-emerald-300 font-semibold tracking-wider flex-1">03220440061</span>
+<button onclick="copyPix()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
+<i class="fa-regular fa-copy"></i> Copiar
+</button>
+</div>
+</div>
+<div class="md:border-l md:border-stone-800 md:pl-8">
+<div class="inline-flex items-center gap-2 text-green-400 font-semibold mb-2">
+<i class="fa-brands fa-whatsapp text-xl"></i>
+<span>Atendimento Direto</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">Dúvidas ou Encomendas?</h3>
+<p class="text-stone-400 text-sm mb-4">Contacte a nossa equipa no WhatsApp para apoio rápido.</p>
+<a href="https://wa.me/5551995177136" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+<i class="fa-brands fa-whatsapp text-lg"></i> (51) 99517-7136
+</a>
+</div>
+</div>
+</main>
+ 
+  <!-- SEÇÃO RELATÓRIO DE VENDAS -->
+<main id="tab-relatorio" class="max-w-6xl mx-auto px-4 py-8 hidden">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="font-serif-title text-3xl font-bold text-amber-950">Relatório de Vendas</h2>
+<p class="text-stone-600 text-sm">Acompanhamento de vendas e histórico de encomendas.</p>
+</div>
+<div class="flex items-center gap-3">
+<button onclick="openManualSaleModal()" class="bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2">
+<i class="fa-solid fa-plus-circle"></i> Venda Balcão
+</button>
+<button onclick="window.print()" class="bg-stone-200 hover:bg-stone-300 text-stone-800 px-4 py-2 rounded-xl text-sm font-medium transition flex items-center gap-2">
+<i class="fa-solid fa-print"></i> Imprimir
+</button>
+<button onclick="clearSalesHistory()" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-2 rounded-xl text-sm font-medium transition">
+<i class="fa-solid fa-trash"></i>
+</button>
+</div>
+</div>
+ 
+    <!-- Indicadores KPIs -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+<div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+<span class="text-xs font-semibold text-stone-500 uppercase">Faturação Total</span>
+<div id="kpi-faturamento" class="text-3xl font-bold text-amber-900 mt-2">R$ 0,00</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+<span class="text-xs font-semibold text-stone-500 uppercase">Total de Encomendas</span>
+<div id="kpi-pedidos" class="text-3xl font-bold text-stone-900 mt-2">0</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+<span class="text-xs font-semibold text-stone-500 uppercase">Ticket Médio</span>
+<div id="kpi-ticket" class="text-3xl font-bold text-emerald-700 mt-2">R$ 0,00</div>
+</div>
+</div>
+ 
+    <!-- Resumo por Produto -->
+<div class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm mb-8">
+<h3 class="font-serif-title text-xl font-bold text-stone-900 mb-4">Vendas por Produto</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+<span class="text-sm font-medium text-amber-900">Cuca Tradicional</span>
+<div id="prod-cuca-qty" class="text-2xl font-bold text-amber-800 mt-1">0 un.</div>
+<div id="prod-cuca-val" class="text-xs text-amber-700">R$ 0,00</div>
+</div>
+<div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+<span class="text-sm font-medium text-amber-900">Pão Francês</span>
+<div id="prod-pao-qty" class="text-2xl font-bold text-amber-800 mt-1">0 un.</div>
+<div id="prod-pao-val" class="text-xs text-amber-700">R$ 0,00</div>
+</div>
+<div class="bg-rose-50 p-4 rounded-xl border border-rose-100">
+<span class="text-sm font-medium text-rose-900">Geleia de Morango</span>
+<div id="prod-geleia-qty" class="text-2xl font-bold text-rose-800 mt-1">0 un.</div>
+<div id="prod-geleia-val" class="text-xs text-rose-700">R$ 0,00</div>
+</div>
+</div>
+</div>
+ 
+    <!-- Tabela de Histórico -->
+<div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-stone-100">
+<h3 class="font-serif-title text-xl font-bold text-stone-900">Histórico de Encomendas</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-stone-50 text-xs font-semibold text-stone-500 uppercase border-b border-stone-200">
+<th class="p-4">Data/Hora</th>
+<th class="p-4">Cliente</th>
+<th class="p-4">Itens</th>
+<th class="p-4">Total</th>
+<th class="p-4">Estado</th>
+</tr>
+</thead>
+<tbody id="sales-table-body" class="divide-y divide-stone-100 text-sm text-stone-700">
+</tbody>
+</table>
+</div>
+</div>
+</main>
+ 
+  <!-- MODAL DO CARRINHO -->
+<div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex justify-end">
+<div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
+<div class="p-5 bg-amber-900 text-white flex justify-between items-center">
+<h3 class="font-serif-title text-xl font-bold flex items-center gap-2">
+<i class="fa-solid fa-shopping-basket text-amber-400"></i> O Seu Carrinho
+</h3>
+<button onclick="toggleCart()" class="text-amber-200 hover:text-white text-xl">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+ 
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+</div>
+ 
+      <div class="p-5 border-t border-stone-200 bg-stone-50 space-y-4">
+<div>
+<label class="block text-xs font-semibold text-stone-600 uppercase mb-1">O Seu Nome</label>
+<input type="text" id="client-name" placeholder="Ex: Maria Silva" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-600 uppercase mb-1">Endereço de Entrega / Observações</label>
+<input type="text" id="client-address" placeholder="Ex: Rua das Flores, 123" class="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+</div>
+ 
+        <div class="pt-2 border-t border-stone-200 flex justify-between items-center text-lg font-bold">
+<span>Total:</span>
+<span id="cart-total" class="text-amber-900">R$ 0,00</span>
+</div>
+ 
+        <button onclick="checkoutWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-md">
+<i class="fa-brands fa-whatsapp text-xl"></i> Enviar Encomenda via WhatsApp
+</button>
+</div>
+</div>
+</div>
+ 
+  <!-- NOTIFICAÇÃO TOAST -->
+<div id="toast" class="fixed bottom-5 right-5 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-xl z-50 hidden flex items-center gap-3">
+<i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+<span id="toast-message">Notificação</span>
+</div>
+ 
+  <!-- SCRIPT -->
 <script>
 
-// ===============================
-// CARRINHO
-// ===============================
-let cart = [];
+    let cart = [];
 
-// ===============================
-// SISTEMA DE PRODUTOS (ESTOQUE)
-// ===============================
-let produtos = [
-  { codigo: 1, nome: "Cuca Tradicional", estoque: 50, valor: 35 },
-  { codigo: 2, nome: "Pão Francês", estoque: 50, valor: 15 },
-  { codigo: 3, nome: "Geleia de Morango", estoque: 50, valor: 45 }
-];
+    let salesHistory = JSON.parse(localStorage.getItem('doce_forno_sales') || '[]');
+ 
+    if (salesHistory.length === 0) {
 
-// ===============================
-// HISTÓRICO DE VENDAS
-// ===============================
-let salesHistory = JSON.parse(localStorage.getItem('doce_forno_sales') || '[]');
+      salesHistory = [
 
-if (salesHistory.length === 0) {
-  salesHistory = [];
-  saveSales();
-}
+        { id: 101, date: '30/09/2026 10:15', client: 'João Pedro', items: '1x Cuca Tradicional, 1x Geleia de Morango', total: 80, status: 'PIX Confirmado' },
 
-// ===============================
-// BUSCAR PRODUTO
-// ===============================
-function buscarProduto(nome) {
-  return produtos.find(p => p.nome.toLowerCase() === nome.toLowerCase());
-}
+        { id: 102, date: '30/09/2026 11:30', client: 'Ana Paula', items: '2x Pão Francês', total: 30, status: 'PIX Confirmado' }
 
-// ===============================
-// TROCA DE ABAS
-// ===============================
-function switchTab(tab) {
-  document.getElementById('tab-loja').classList.toggle('hidden', tab !== 'loja');
-  document.getElementById('tab-relatorio').classList.toggle('hidden', tab !== 'relatorio');
+      ];
 
-  if (tab === 'relatorio') renderReports();
-}
+      saveSales();
 
-// ===============================
-// CARRINHO
-// ===============================
-function toggleCart() {
-  document.getElementById('cart-modal').classList.toggle('hidden');
-}
-
-// ===============================
-// ADICIONAR AO CARRINHO (COM ESTOQUE)
-// ===============================
-function addToCart(id, name, price) {
-  let produto = buscarProduto(name);
-
-  if (!produto) {
-    showToast("Produto não encontrado!");
-    return;
-  }
-
-  if (produto.estoque <= 0) {
-    showToast("Sem estoque!");
-    return;
-  }
-
-  const existing = cart.find(item => item.id === id);
-
-  if (existing) {
-    if (existing.qty + 1 > produto.estoque) {
-      showToast("Estoque insuficiente!");
-      return;
     }
-    existing.qty++;
-  } else {
-    cart.push({ id, name, price, qty: 1 });
-  }
+ 
+    function switchTab(tab) {
 
-  updateCartUI();
-  showToast(name + " adicionado!");
-}
+      document.getElementById('tab-loja').classList.toggle('hidden', tab !== 'loja');
 
-// ===============================
-// ATUALIZAR QUANTIDADE
-// ===============================
-function updateCartQty(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (item) {
-    let produto = buscarProduto(item.name);
+      document.getElementById('tab-relatorio').classList.toggle('hidden', tab !== 'relatorio');
 
-    if (delta > 0 && item.qty + 1 > produto.estoque) {
-      showToast("Estoque insuficiente!");
-      return;
+      document.getElementById('btn-loja').className = tab === 'loja' 
+
+        ? 'px-3 py-1.5 rounded-lg bg-amber-800 text-amber-100 font-medium transition' 
+
+        : 'px-3 py-1.5 rounded-lg hover:bg-amber-800 text-amber-200 font-medium transition';
+
+      document.getElementById('btn-relatorio').className = tab === 'relatorio' 
+
+        ? 'px-3 py-1.5 rounded-lg bg-amber-800 text-amber-100 font-medium transition' 
+
+        : 'px-3 py-1.5 rounded-lg hover:bg-amber-800 text-amber-200 font-medium transition';
+ 
+      if (tab === 'relatorio') renderReports();
+
     }
+ 
+    function toggleCart() {
 
-    item.qty += delta;
+      const modal = document.getElementById('cart-modal');
 
-    if (item.qty <= 0) {
-      cart = cart.filter(i => i.id !== id);
+      modal.classList.toggle('hidden');
+
     }
-  }
+ 
+    function addToCart(id, name, price) {
 
-  updateCartUI();
-}
+      const existing = cart.find(item => item.id === id);
 
-// ===============================
-// UI DO CARRINHO
-// ===============================
-function updateCartUI() {
-  const container = document.getElementById('cart-items-container');
-  const badge = document.getElementById('cart-badge');
-  const totalEl = document.getElementById('cart-total');
+      if (existing) {
 
-  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+        existing.qty += 1;
 
-  badge.innerText = totalItems;
-  badge.classList.toggle('hidden', totalItems === 0);
+      } else {
 
-  container.innerHTML = cart.map(item => `
-    <div class="flex justify-between p-3 bg-stone-50 rounded">
-      <span>${item.name} (${item.qty})</span>
-      <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
-    </div>
-  `).join('');
+        cart.push({ id, name, price, qty: 1 });
 
-  totalEl.innerText = `R$ ${totalPrice.toFixed(2)}`;
-}
+      }
 
-// ===============================
-// FINALIZAR PEDIDO
-// ===============================
-function checkoutWhatsApp() {
+      updateCartUI();
 
-  if (cart.length === 0) {
-    showToast("Carrinho vazio!");
-    return;
-  }
+      showToast(`${name} adicionado ao carrinho!`);
 
-  let total = 0;
-  let itens = "";
-
-  cart.forEach(item => {
-
-    let produto = buscarProduto(item.name);
-
-    if (produto.estoque < item.qty) {
-      showToast("Estoque insuficiente!");
-      return;
     }
+ 
+    function updateCartQty(id, delta) {
 
-    produto.estoque -= item.qty;
+      const item = cart.find(i => i.id === id);
 
-    let valor = item.qty * item.price;
-    total += valor;
+      if (item) {
 
-    itens += `${item.qty}x ${item.name}, `;
-  });
+        item.qty += delta;
 
-  // salvar venda
-  salesHistory.unshift({
-    id: Date.now(),
-    date: new Date().toLocaleString(),
-    client: "Cliente",
-    items: itens,
-    total: total,
-    status: "PIX"
-  });
+        if (item.qty <= 0) {
 
-  saveSales();
+          cart = cart.filter(i => i.id !== id);
 
-  cart = [];
-  updateCartUI();
-  renderReports();
+        }
 
-  showToast("Pedido finalizado!");
-}
+      }
 
-// ===============================
-// RELATÓRIO
-// ===============================
-function renderReports() {
+      updateCartUI();
 
-  let totalFaturamento = 0;
-  let totalPedidos = salesHistory.length;
+    }
+ 
+    function updateCartUI() {
 
-  salesHistory.forEach(sale => {
-    totalFaturamento += sale.total;
-  });
+      const container = document.getElementById('cart-items-container');
 
-  document.getElementById('kpi-faturamento').innerText = `R$ ${totalFaturamento.toFixed(2)}`;
-  document.getElementById('kpi-pedidos').innerText = totalPedidos;
-  document.getElementById('kpi-ticket').innerText =
-    totalPedidos > 0 ? `R$ ${(totalFaturamento / totalPedidos).toFixed(2)}` : "R$ 0,00";
+      const badge = document.getElementById('cart-badge');
 
-  const tbody = document.getElementById('sales-table-body');
+      const totalEl = document.getElementById('cart-total');
+ 
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
 
-  tbody.innerHTML = salesHistory.map(sale => `
-    <tr>
-      <td>${sale.date}</td>
-      <td>${sale.client}</td>
-      <td>${sale.items}</td>
-      <td>R$ ${sale.total.toFixed(2)}</td>
-      <td>${sale.status}</td>
-    </tr>
-  `).join('');
-}
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+ 
+      if (totalItems > 0) {
 
-// ===============================
-// STORAGE
-// ===============================
-function saveSales() {
-  localStorage.setItem('doce_forno_sales', JSON.stringify(salesHistory));
-}
+        badge.innerText = totalItems;
 
-// ===============================
-// TOAST
-// ===============================
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  document.getElementById('toast-message').innerText = msg;
-  toast.classList.remove('hidden');
-  setTimeout(() => toast.classList.add('hidden'), 3000);
-}
+        badge.classList.remove('hidden');
 
-// INIT
-updateCartUI();
+      } else {
 
+        badge.classList.add('hidden');
+
+      }
+ 
+      if (cart.length === 0) {
+
+        container.innerHTML = `
+<div class="text-center py-12 text-stone-400">
+<i class="fa-solid fa-basket-shopping text-4xl mb-3"></i>
+<p>O seu carrinho está vazio.</p>
+</div>
+
+        `;
+
+      } else {
+
+        container.innerHTML = cart.map(item => `
+<div class="flex items-center justify-between bg-stone-50 p-3 rounded-xl border border-stone-200">
+<div>
+<h4 class="font-medium text-stone-900 text-sm">${item.name}</h4>
+<span class="text-xs text-amber-900 font-bold">R$ ${(item.price * item.qty).toFixed(2)}</span>
+</div>
+<div class="flex items-center gap-2">
+<button onclick="updateCartQty(${item.id}, -1)" class="w-7 h-7 bg-stone-200 rounded-lg text-stone-700 font-bold hover:bg-stone-300">-</button>
+<span class="text-sm font-semibold w-5 text-center">${item.qty}</span>
+<button onclick="updateCartQty(${item.id}, 1)" class="w-7 h-7 bg-amber-800 text-white rounded-lg font-bold hover:bg-amber-900">+</button>
+</div>
+</div>
+
+        `).join('');
+
+      }
+ 
+      totalEl.innerText = `R$ ${totalPrice.toFixed(2)}`;
+
+    }
+ 
+    function copyPix() {
+
+      const pixKey = document.getElementById('pix-key').innerText;
+
+      navigator.clipboard.writeText(pixKey).then(() => {
+
+        showToast('Chave PIX copiada com sucesso!');
+
+      });
+
+    }
+ 
+    function showToast(msg) {
+
+      const toast = document.getElementById('toast');
+
+      document.getElementById('toast-message').innerText = msg;
+
+      toast.classList.remove('hidden');
+
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+
+    }
+ 
+    function checkoutWhatsApp() {
+
+      if (cart.length === 0) {
+
+        showToast('Adicione produtos ao carrinho antes de finalizar.');
+
+        return;
+
+      }
+ 
+      const clientName = document.getElementById('client-name').value.trim() || 'Cliente';
+
+      const clientAddress = document.getElementById('client-address').value.trim() || 'A combinar';
+
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      const itemsText = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+ 
+      const newSale = {
+
+        id: Date.now(),
+
+        date: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }),
+
+        client: clientName,
+
+        items: itemsText,
+
+        total: totalPrice,
+
+        status: 'PIX Pendente/Enviado'
+
+      };
+ 
+      salesHistory.unshift(newSale);
+
+      saveSales();
+ 
+      let msg = `*NOVO PEDIDO - DOCE FORNO*\n\n`;
+
+      msg += `*Cliente:* ${clientName}\n`;
+
+      msg += `*Endereço/Obs:* ${clientAddress}\n\n`;
+
+      msg += `*Itens do Pedido:*\n`;
+
+      cart.forEach(item => {
+
+        msg += `• ${item.qty}x ${item.name} (R$ ${(item.price * item.qty).toFixed(2)})\n`;
+
+      });
+
+      msg += `\n*TOTAL:* R$ ${totalPrice.toFixed(2)}\n`;
+
+      msg += `*Forma de Pagamento:* PIX (Chave: 03220440061)`;
+ 
+      const encodedMsg = encodeURIComponent(msg);
+
+      window.open(`https://wa.me/5551995177136?text=${encodedMsg}`, '_blank');
+ 
+      cart = [];
+
+      updateCartUI();
+
+      toggleCart();
+
+      showToast('Encomenda enviada para o WhatsApp!');
+
+    }
+ 
+    function saveSales() {
+
+      localStorage.setItem('doce_forno_sales', JSON.stringify(salesHistory));
+
+    }
+ 
+    function renderReports() {
+
+      const tbody = document.getElementById('sales-table-body');
+
+      let totalFaturamento = 0;
+
+      let qtyCuca = 0, valCuca = 0;
+
+      let qtyPao = 0, valPao = 0;
+
+      let qtyGeleia = 0, valGeleia = 0;
+ 
+      salesHistory.forEach(sale => {
+
+        totalFaturamento += sale.total;
+
+        if (sale.items.includes('Cuca')) {
+
+          qtyCuca += 1; valCuca += 35;
+
+        }
+
+        if (sale.items.includes('Pão')) {
+
+          qtyPao += 1; valPao += 15;
+
+        }
+
+        if (sale.items.includes('Geleia')) {
+
+          qtyGeleia += 1; valGeleia += 45;
+
+        }
+
+      });
+ 
+      const totalPedidos = salesHistory.length;
+
+      const ticketMedio = totalPedidos > 0 ? (totalFaturamento / totalPedidos) : 0;
+ 
+      document.getElementById('kpi-faturamento').innerText = `R$ ${totalFaturamento.toFixed(2)}`;
+
+      document.getElementById('kpi-pedidos').innerText = totalPedidos;
+
+      document.getElementById('kpi-ticket').innerText = `R$ ${ticketMedio.toFixed(2)}`;
+ 
+      document.getElementById('prod-cuca-qty').innerText = `${qtyCuca} un.`;
+
+      document.getElementById('prod-cuca-val').innerText = `R$ ${valCuca.toFixed(2)}`;
+ 
+      document.getElementById('prod-pao-qty').innerText = `${qtyPao} un.`;
+
+      document.getElementById('prod-pao-val').innerText = `R$ ${valPao.toFixed(2)}`;
+ 
+      document.getElementById('prod-geleia-qty').innerText = `${qtyGeleia} un.`;
+
+      document.getElementById('prod-geleia-val').innerText = `R$ ${valGeleia.toFixed(2)}`;
+ 
+      if (salesHistory.length === 0) {
+
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-stone-400">Nenhuma venda registrada ainda.</td></tr>`;
+
+      } else {
+
+        tbody.innerHTML = salesHistory.map(sale => `
+<tr class="hover:bg-stone-50">
+<td class="p-4 font-mono text-xs">${sale.date}</td>
+<td class="p-4 font-medium text-stone-900">${sale.client}</td>
+<td class="p-4 text-xs">${sale.items}</td>
+<td class="p-4 font-bold text-amber-900">R$ ${sale.total.toFixed(2)}</td>
+<td class="p-4"><span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium">${sale.status}</span></td>
+</tr>
+
+        `).join('');
+
+      }
+
+    }
+ 
+    function openManualSaleModal() {
+
+      const name = prompt('Nome do Cliente (Balcão):', 'Venda Balcão');
+
+      if (!name) return;
+
+      const valorStr = prompt('Valor Total da Venda (R$):', '35.00');
+
+      const valor = parseFloat(valorStr);
+
+      if (isNaN(valor) || valor <= 0) return;
+ 
+      salesHistory.unshift({
+
+        id: Date.now(),
+
+        date: new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }),
+
+        client: name,
+
+        items: 'Venda Direta no Balcão',
+
+        total: valor,
+
+        status: 'Pago no Balcão'
+
+      });
+
+      saveSales();
+
+      renderReports();
+
+      showToast('Venda registrada no relatório!');
+
+    }
+ 
+    function clearSalesHistory() {
+
+      if (confirm('Tem certeza que deseja apagar todo o histórico de vendas?')) {
+
+        salesHistory = [];
+
+        saveSales();
+
+        renderReports();
+
+        showToast('Histórico limpo.');
+
+      }
+
+    }
+ 
+    updateCartUI();
 </script>
+</body>
+</html>
+ 
